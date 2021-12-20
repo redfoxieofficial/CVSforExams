@@ -1,0 +1,70 @@
+import json
+import pandas as pd
+import os
+from csv import writer
+
+class Lessons:
+    def __init__(self):
+        pass
+
+
+    def convert(self):
+        kontrol1 = 0
+        df_json = pd.read_json('kisi.json')
+        df = df_json.to_csv('kisi.csv')
+        os.remove('kisi.json')
+        kontrol1 + 1
+        if kontrol1 > 1:
+            df.to_csv('kisi.csv', mode='a', index=False, header=False)
+
+
+    def kayit(self):
+
+        self.ogrenci = input("Öğrenci Adı giriniz :")
+        self.ogrencino = int(input("Öğrenci Numarası giriniz :"))
+        self.ders = input("Ders Adı giriniz :")
+        self.vizeNot = int(input("dersinin vize notunuzu giriniz:"))
+        self.finalNot = int(input("dersinin final notunuzu giriniz:"))
+
+
+
+        kisi_dict = [{
+            'ogrenci': self.ogrenci,
+            'ogrencino': self.ogrencino,
+            'ders': self.ders,
+            'vizeNot': self.finalNot,
+            'finalNot': self.vizeNot
+            }]
+
+        with open('kisi.json', 'w') as json_dosya:
+            json.dump(kisi_dict, json_dosya)
+    def derskayitlari(self):
+
+        kontrol = input("Daha çok ders girecek misiniz?      E/H")
+        while kontrol == "E" or "H":
+
+            if kontrol.lower() == "E":
+                pass
+            else:
+                break
+
+        dersSayisi = int(input("Kaç tane daha ders gireceksiniz: "))
+        kontrol2 = 0
+        for i in range(0,dersSayisi):
+            self.ders = input("Ders Adı giriniz :")
+            self.vizeNot = int(input("dersinin vize notunuzu giriniz:"))
+            self.finalNot = int(input("dersinin final notunuzu giriniz:"))
+            with open('kisi.csv', 'a', newline='') as f_object:
+                writer_object = writer(f_object)
+                writer_object.writerow([" ", " ", self.ders, self.vizeNot, self.finalNot])
+
+        f_object.close()
+
+Lessons().kayit()
+try:
+    Lessons().convert()
+except AttributeError:
+    Lessons().convert()
+    os.system("cls")
+    os.system("clear")
+Lessons().derskayitlari()
